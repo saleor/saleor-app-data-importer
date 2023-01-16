@@ -4,6 +4,7 @@ import * as jose from "jose";
 
 /**
  * TODO test
+ * TODO extract to app-sdk
  */
 export function useAuthorizedToken(requirePermission: string) {
   const [authorized, setAuthorized] = useState<boolean | undefined>();
