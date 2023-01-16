@@ -1,5 +1,5 @@
 {
-  "name": "saleor-app-products-importer",
+  "name": "saleor-app-data-importer",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -25,7 +25,8 @@
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
     "jsdom": "^20.0.3",
-    "next": "12.3.1",
+    "next": "12.3.4",
+    "nuvo-react": "^1.20.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "urql": "^3.0.3",
@@ -47,8 +48,9 @@
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "eslint": "8.25.0",
-    "eslint-config-next": "12.3.1",
+    "eslint-config-next": "12.3.4",
     "eslint-config-prettier": "^8.5.0",
+    "next-transpile-modules": "^10.0.0",
     "prettier": "^2.7.1",
     "typescript": "4.8.4"
   },
