@@ -1,4 +1,5 @@
 import { ColumnAPI } from "nuvo-react";
+import { z } from "zod";
 
 const customerColumns: ColumnAPI[] = [
   {
@@ -79,7 +80,6 @@ const generateAddressColumns = (labelNamespace: string, keyNamespace: string): C
   {
     label: `${labelNamespace} -> Phone`,
     key: `customerCreate.${keyNamespace}.phone`,
-    columnType: "phone",
   },
 ];
 
@@ -90,3 +90,34 @@ const allColumns: ColumnAPI[] = [
 ];
 
 export const getCustomersModelColumns = () => allColumns;
+
+const zodAddressSchema = z
+  .object({
+    firstName: z.string().nullish(),
+    lastName: z.string().nullish(),
+    companyName: z.string().nullish(),
+    streetAddress1: z.string().nullish(),
+    streetAddress2: z.string().nullish(),
+    city: z.string().nullish(),
+    cityArea: z.string().nullish(),
+    postalCode: z.string().nullish(),
+    country: z.string().nullish(),
+    countryArea: z.string().nullish(),
+    phone: z.string().nullish(),
+  })
+  .nullable();
+
+export const getResultModelSchema = () =>
+  z.object({
+    customerCreate: z.object({
+      firstName: z.string().nullish(),
+      lastName: z.string().nullish(),
+      email: z.string(),
+      note: z.string().nullish(),
+      externalReference: z.string().nullish(),
+      defaultBillingAddress: zodAddressSchema,
+      defaultShippingAddress: zodAddressSchema,
+    }),
+  });
+
+export type CustomerColumnSchema = z.infer<ReturnType<typeof getResultModelSchema>>;

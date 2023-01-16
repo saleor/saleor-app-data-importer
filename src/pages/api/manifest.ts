@@ -9,12 +9,7 @@ export default createManifestHandler({
       name: packageJson.name,
       tokenTargetUrl: `${context.appBaseUrl}/api/register`,
       appUrl: context.appBaseUrl,
-      permissions: [
-        /**
-         * Set permissions for app if needed
-         * https://docs.saleor.io/docs/3.x/developer/permissions
-         */
-      ],
+      permissions: ["MANAGE_USERS"],
       id: "saleor.app",
       version: packageJson.version,
       webhooks: [

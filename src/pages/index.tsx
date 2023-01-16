@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import React from "react";
 import { Container, Divider, Typography } from "@material-ui/core";
 import { PageTab, PageTabs } from "@saleor/macaw-ui";
-import { CustomersImporterView } from "../modules/importers/customers-importer/customers-importer-view";
+import { CustomersImporterView } from "../modules/importers/customers-importer-nuvo/customers-importer-view";
 
 type Tab = "customers";
 
