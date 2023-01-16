@@ -1,30 +1,26 @@
 import { NextPage } from "next";
-import React from "react";
-import { Container, Divider, Typography } from "@material-ui/core";
-import { PageTab, PageTabs } from "@saleor/macaw-ui";
-import { CustomersImporterView } from "../modules/importers/customers-importer-nuvo/customers-importer-view";
-
-type Tab = "customers";
+import { useAppBridge } from "@saleor/app-sdk/app-bridge";
+import { useEffect } from "react";
+import { useIsMounted } from "usehooks-ts";
+import { useRouter } from "next/router";
 
 const IndexPage: NextPage = () => {
-  const [activeTab, setActiveTab] = React.useState<Tab>("customers");
+  const { appBridgeState } = useAppBridge();
+  const isMounted = useIsMounted();
+  const { replace } = useRouter();
+
+  useEffect(() => {
+    if (isMounted() && appBridgeState?.ready) {
+      replace("/importer");
+    }
+  }, [isMounted, appBridgeState?.ready]);
 
   return (
-    <Container>
-      <Typography variant="h1">Saleor Data Importer App</Typography>
-
-      <PageTabs
-        style={{ marginBottom: 20, marginTop: 20 }}
-        value={activeTab}
-        onChange={(e) => setActiveTab(e as Tab)}
-      >
-        <PageTab value="customers" label="Customers & addresses" />
-        <PageTab disabled value="orders" label="Orders" />
-        <PageTab disabled value="products" label="Products" />
-      </PageTabs>
-      <Divider style={{ marginBottom: 20 }} />
-      {activeTab === "customers" && <CustomersImporterView />}
-    </Container>
+    <div>
+      <h1>Saleor Data Importer</h1>
+      <p>This is Saleor App that allows importing data from CSV</p>
+      <p>Install app in your Saleor instance and open in with Dashboard</p>
+    </div>
   );
 };
 

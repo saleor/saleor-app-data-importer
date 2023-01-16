@@ -25,16 +25,17 @@
     "dot-object": "^2.1.4",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
+    "jose": "^4.11.2",
     "jsdom": "^20.0.3",
     "next": "12.3.4",
     "nuvo-react": "^1.20.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "urql": "^3.0.3",
+    "usehooks-ts": "^2.9.1",
     "vite": "^4.0.1",
     "vitest": "^0.25.8",
-    "zod": "^3.20.2",
-    "jose": "^4.11.2"
+    "zod": "^3.20.2"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "2.13.3",
