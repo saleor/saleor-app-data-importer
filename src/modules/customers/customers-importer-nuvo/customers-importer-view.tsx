@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import dynamic from "next/dynamic";
 import { ConfigureAPI, OnResults, SettingsAPI } from "nuvo-react";
 import {
@@ -7,10 +7,9 @@ import {
   getResultModelSchema,
 } from "./customers-columns-model";
 import dotObject from "dot-object";
-import { useCustomerCreateMutation } from "../../../../generated/graphql";
 import { useAuthorizedToken } from "../../authorization/use-authorized-token";
 import { Alert } from "@saleor/macaw-ui";
-import { Table, TableBody, TableCell, TableRow } from "@material-ui/core";
+import { CustomersImportingResults } from "../customers-results/customers-importing-results";
 
 let PassSubmitResult: any;
 let RejectSubmitResult: any;
@@ -42,9 +41,6 @@ const licenseKey = process.env.NEXT_PUBLIC_NUVO_LICENSE_KEY as string;
  * - map addresses https://docs.saleor.io/docs/3.x/developer/address
  */
 export const CustomersImporterView = () => {
-  // use mutation-per-line
-  // const [mutationResult, mutate] = useCustomerCreateMutation();
-
   const authorized = useAuthorizedToken("MANAGE_USERS");
 
   const [importedLines, setImportedLines] = useState<CustomerColumnSchema[] | null>(null);
@@ -66,18 +62,7 @@ export const CustomersImporterView = () => {
   }
 
   if (importedLines) {
-    return (
-      <Table>
-        <TableBody>
-          {importedLines.map((row) => (
-            <TableRow key={row.customerCreate.email}>
-              <TableCell>{row.customerCreate.email}</TableCell>
-              <TableCell>Status todo</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    );
+    return <CustomersImportingResults importedLines={importedLines} />;
   }
 
   return <NuvoImporter onResults={handleResults} licenseKey={licenseKey} settings={nuvoSettings} />;
