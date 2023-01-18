@@ -1,12 +1,13 @@
 import { NextPage } from "next";
-import React from "react";
+import React, { ComponentProps } from "react";
 import { Container, Divider, Typography } from "@material-ui/core";
 import { PageTab, PageTabs } from "@saleor/macaw-ui";
 import { CustomersImporterView } from "../modules/importers/customers-importer-nuvo/customers-importer-view";
+import GraphQLProvider from "../providers/GraphQLProvider";
 
 type Tab = "customers";
 
-const IndexPage: NextPage = () => {
+const ImporterPage: NextPage = () => {
   const [activeTab, setActiveTab] = React.useState<Tab>("customers");
 
   return (
@@ -28,4 +29,10 @@ const IndexPage: NextPage = () => {
   );
 };
 
-export default IndexPage;
+const WrappedPage = (props: ComponentProps<NextPage>) => (
+  <GraphQLProvider>
+    <ImporterPage {...props} />
+  </GraphQLProvider>
+);
+
+export default WrappedPage;
