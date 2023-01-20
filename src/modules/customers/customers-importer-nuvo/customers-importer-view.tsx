@@ -8,8 +8,10 @@ import {
 } from "./customers-columns-model";
 import dotObject from "dot-object";
 import { useAuthorizedToken } from "../../authorization/use-authorized-token";
-import { Alert } from "@saleor/macaw-ui";
+import { Alert, Button } from "@saleor/macaw-ui";
 import { CustomersImportingResults } from "../customers-results/customers-importing-results";
+import { LinearProgress } from "@material-ui/core";
+import { CloudUpload } from "@material-ui/icons";
 
 let PassSubmitResult: any;
 let RejectSubmitResult: any;
@@ -22,7 +24,12 @@ const NuvoImporter = dynamic<ConfigureAPI>(
       return item.NuvoImporter;
     });
   },
-  { ssr: false }
+  {
+    ssr: false,
+    loading() {
+      return <LinearProgress />;
+    },
+  }
 );
 
 const columns = getCustomersModelColumns();
@@ -35,11 +42,6 @@ const nuvoSettings: SettingsAPI = {
 
 const licenseKey = process.env.NEXT_PUBLIC_NUVO_LICENSE_KEY as string;
 
-/**
- * TODO
- * - display list of importer users after results created, show mutation progress and error and retry
- * - map addresses https://docs.saleor.io/docs/3.x/developer/address
- */
 export const CustomersImporterView = () => {
   const authorized = useAuthorizedToken("MANAGE_USERS");
 
@@ -65,5 +67,24 @@ export const CustomersImporterView = () => {
     return <CustomersImportingResults importedLines={importedLines} />;
   }
 
-  return <NuvoImporter onResults={handleResults} licenseKey={licenseKey} settings={nuvoSettings} />;
+  return (
+    <NuvoImporter
+      renderUploadButton={({ launch }) => {
+        return (
+          <Button
+            size="large"
+            startIcon={<CloudUpload />}
+            variant="primary"
+            color="primary"
+            onClick={launch}
+          >
+            Upload file
+          </Button>
+        );
+      }}
+      onResults={handleResults}
+      licenseKey={licenseKey}
+      settings={nuvoSettings}
+    />
+  );
 };

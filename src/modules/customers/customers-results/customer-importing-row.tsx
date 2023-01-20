@@ -1,4 +1,5 @@
-import { TableCell, TableRow, Typography } from "@material-ui/core";
+import { Box, TableCell, TableRow, Typography } from "@material-ui/core";
+import { Done, Error, HourglassEmpty } from "@material-ui/icons";
 import React, { memo, useCallback, useEffect, useState } from "react";
 import { useCustomerCreateMutation } from "../../../../generated/graphql";
 import { CustomerColumnSchema } from "../customers-importer-nuvo/customers-columns-model";
@@ -14,50 +15,65 @@ const ImportedStatus = ({ id }: { id: string }) => {
   const { appBridge } = useAppBridge();
 
   return (
-    <span
-      onClick={() => {
-        appBridge?.dispatch(
-          actions.Redirect({
-            newContext: true,
-            to: `/customers/${id}`,
-          })
-        );
-      }}
-    >
-      Imported with ID {id}
-    </span>
+    <Box style={{ gap: 20, display: "flex", alignItems: "center" }}>
+      <Done color="primary" width={30} />
+      <span
+        style={{ cursor: "pointer" }}
+        onClick={() => {
+          appBridge?.dispatch(
+            actions.Redirect({
+              // newContext: true, // open in new context but dashboard has a bug here
+              to: `/customers/${id}`,
+            })
+          );
+        }}
+      >
+        Imported with ID <code>{id}</code>
+      </span>
+    </Box>
   );
 };
 
 const ErrorStatus = ({ message, onRetry }: { message: string; onRetry(): void }) => {
   return (
-    <div>
-      <Typography color="error">Error importing: {message}</Typography>
+    <Box style={{ gap: 20, display: "flex", alignItems: "center" }}>
+      <Error width={30} color="error" />
+      <span color="error">Error importing: {message}</span>
       <Button onClick={onRetry}>Retry</Button>
-    </div>
+    </Box>
   );
 };
-const PendingStatus = () => <span>Importing...</span>;
+const PendingStatus = () => (
+  <Box style={{ gap: 20, display: "flex", alignItems: "center" }}>
+    <HourglassEmpty width={30} />
+    <span>Importing...</span>
+  </Box>
+);
 
 export const CustomerImportingRow = (props: Props) => {
   const [mutationResult, mutate] = useCustomerCreateMutation();
   const triggerMutation = useCallback(() => {
     mutate({
       input: {
-        // todo map address
         ...props.importedModel.customerCreate,
+        // todo map address
         defaultShippingAddress: null,
         defaultBillingAddress: null,
         isActive: false,
       },
     });
-  }, [props.importedModel]);
+  }, [props.importedModel, mutate]);
 
   useEffect(() => {
-    if (props.doImport) {
+    if (
+      props.doImport &&
+      !mutationResult.data &&
+      !mutationResult.error &&
+      !mutationResult.fetching
+    ) {
       triggerMutation();
     }
-  }, [props.doImport, mutate]);
+  }, [props.doImport, mutate, mutationResult, triggerMutation]);
 
   const renderStatus = () => {
     if (mutationResult.data?.customerCreate?.user?.id) {

@@ -1,5 +1,5 @@
 import { Button } from "@saleor/macaw-ui";
-import { Table, TableBody } from "@material-ui/core";
+import { Table, TableBody, Typography } from "@material-ui/core";
 import { CustomerImportingRow } from "./customer-importing-row";
 import React, { useState } from "react";
 import { CustomerColumnSchema } from "../customers-importer-nuvo/customers-columns-model";
@@ -13,9 +13,19 @@ export const CustomersImportingResults = ({
 
   return (
     <div>
+      <Typography paragraph variant="h3">Customers rows from imported file</Typography>
+
+      <Typography paragraph>
+        Lines will be imported one by one. Failed imports can be retried, but performed operations
+        must be reverted manually. Users will be set to inactive.
+      </Typography>
+      <Typography paragraph>
+        Customers will <strong>not</strong> be informed or notified by this operation.
+      </Typography>
+
       {!importingStarted && (
         <Button
-          style={{ marginBottom: 20 }}
+          style={{ margin: "20px 0" }}
           variant="primary"
           onClick={() => setImportingStarted(true)}
         >
@@ -23,7 +33,7 @@ export const CustomersImportingResults = ({
         </Button>
       )}
 
-      <Table>
+      <Table style={{marginTop: 50}}>
         <TableBody>
           {importedLines.map((row) => (
             <CustomerImportingRow
