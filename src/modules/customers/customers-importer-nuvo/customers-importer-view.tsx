@@ -38,6 +38,47 @@ const nuvoSettings: SettingsAPI = {
   columns,
   developerMode: true, //todo
   identifier: "customers",
+  modal: false,
+  style: {
+    buttons: {
+      primary: {
+        background: "black",
+        color: "#fff",
+      },
+    },
+    loader:{
+      loadAnimationColor: '#000'
+    },
+    header: {
+      description: {
+        display: "none",
+      },
+      root: {
+        // display: "none",
+      },
+    },
+    progressBar: {
+      root: {
+        display: "none",
+      },
+    },
+    dropzone: {
+      icon: {
+        box: {
+          filter: "grayscale(1)",
+        },
+      },
+      root: {
+        background: "#fff",
+        border: "1px dashed #ddd",
+      },
+    },
+    globals: { fontFamily: "Inter", backgroundColor: "transparent" },
+  },
+  title: "Upload customers to Saleor",
+  disableExcelTemplate: true,
+  disableTemplates: true,
+  allowManualInput: true,
 };
 
 const licenseKey = process.env.NEXT_PUBLIC_NUVO_LICENSE_KEY as string;
