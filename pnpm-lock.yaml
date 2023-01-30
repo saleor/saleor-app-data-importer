@@ -22,6 +22,7 @@ specifiers:
   '@types/react-dom': ^18.0.6
   '@urql/exchange-auth': ^1.0.0
   '@vitejs/plugin-react': ^3.0.0
+  clsx: ^1.2.1
   dot-object: ^2.1.4
   eslint: 8.25.0
   eslint-config-next: 12.3.4
@@ -51,6 +52,7 @@ dependencies:
   '@saleor/macaw-ui': 0.7.2_k2kuy4f2rkqfztjzphbs3himfi
   '@urql/exchange-auth': 1.0.0_graphql@16.6.0
   '@vitejs/plugin-react': 3.0.0_vite@4.0.1
+  clsx: 1.2.1
   dot-object: 2.1.4
   graphql: 16.6.0
   graphql-tag: 2.12.6_graphql@16.6.0
