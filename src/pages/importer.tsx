@@ -37,7 +37,7 @@ const ImporterPage: NextPage = () => {
       <MainBar
         bottomMargin
         icon={<AppIcon />}
-        name="Saleor Data Importer"
+        name="Data Importer"
         author="By Saleor Commerce"
         rightColumnContent={
           <div style={{ display: "flex", gap: 10 }}>
